@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>In Pursuit 🚨</title>
+  <title>🚨 In Pursuit</title>
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="In Pursuit" />
+  <link rel="manifest" href="/site.webmanifest" />
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
   <style>
     html, body {
@@ -48,10 +54,41 @@
       padding: 20px;
       box-sizing: border-box;
     }
+
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #2E2C3B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .spinner {
+      border: 6px solid #ddd;
+      border-top: 6px solid #ffd600;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
   <div id="rotateMessage">Please rotate your device to portrait mode to continue playing.</div>
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+  </div>
+  
   <div id="unityContainer">
     <canvas id="unity-canvas" width="720" height="1280"></canvas>
   </div>
@@ -89,14 +126,14 @@
         canvas.style.background = "#2E2C3B";
         // Additional styling for better responsiveness
         canvas.style.border = "2px solid #4b4861"; // Adding a border for visibility
-        // Setting a minimum width for better appearance
-        // canvas.style.minWidth = "320px"; // Ensuring a minimum width for small screens
       }
     }
 
     window.addEventListener("load", checkOrientation);
     window.addEventListener("resize", checkOrientation);
     window.addEventListener("orientationchange", checkOrientation);
+
+    const loadingOverlay = document.getElementById("loadingOverlay");
 
     createUnityInstance(document.querySelector("#unity-canvas"), {
       dataUrl: "Build/In Pursuit.data.unityweb",
@@ -106,7 +143,12 @@
       companyName: "Zeesmic",
       productName: "InPursuit",
       productVersion: "1.0"
-    });
+    }).then((unityInstance) => {
+  loadingOverlay.style.display = "none";
+}).catch((err) => {
+  loadingOverlay.innerText = "Failed to load the game.";
+  console.error(err);
+});
   </script>
 </body>
 </html>
