@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>In Pursuit 🚨</title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #2E2C3B;
+      overflow: hidden;
+    }
+
+    #unityContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #unity-canvas {
+      width: 100vw;
+      height: 100vh;
+      background: #2E2C3B;
+      display: block;
+    }
+
+
+    #rotateMessage {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #2E2C3B;
+      color: white;
+      font-size: 1.5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="rotateMessage">Please rotate your device to portrait mode to continue playing.</div>
+  <div id="unityContainer">
+    <canvas id="unity-canvas" width="720" height="1280"></canvas>
+  </div>
+
+  <script src="Build/In Pursuit.loader.js"></script>
+  <script>
+    function isMobile() {
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
+
+    function checkOrientation() {
+      const landscape = window.innerWidth > window.innerHeight;
+      const mobile = isMobile();
+
+      const canvas = document.getElementById("unity-canvas");
+      const message = document.getElementById("rotateMessage");
+
+      if (mobile && landscape) {
+        message.style.display = "flex";
+        canvas.style.display = "none";
+      } else {
+        message.style.display = "none";
+        canvas.style.display = "block";
+      }
+
+      if (!mobile) {
+        console.log("Desktop detected");
+        const canvas = document.getElementById("unity-canvas");
+        canvas.style.aspectRatio = "9 / 16";
+        canvas.style.height = "100vh";
+        canvas.style.maxHeight = "100vh";
+        canvas.style.maxWidth = "720px"; // Ensuring a maximum width for small screens
+        canvas.style.display = "block";
+        canvas.style.margin = "0 auto";
+        canvas.style.background = "#2E2C3B";
+        // Additional styling for better responsiveness
+        canvas.style.border = "2px solid #4b4861"; // Adding a border for visibility
+        // Setting a minimum width for better appearance
+        // canvas.style.minWidth = "320px"; // Ensuring a minimum width for small screens
+      }
+    }
+
+    window.addEventListener("load", checkOrientation);
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+      dataUrl: "Build/In Pursuit.data.unityweb",
+      frameworkUrl: "Build/In Pursuit.framework.js.unityweb",
+      codeUrl: "Build/In Pursuit.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Zeesmic",
+      productName: "InPursuit",
+      productVersion: "1.0"
+    });
+  </script>
+</body>
+</html>
