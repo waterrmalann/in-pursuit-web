@@ -1,154 +1,198 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>🚨 In Pursuit</title>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content="In Pursuit" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #2E2C3B;
-      overflow: hidden;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>🚨 In Pursuit</title>
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="In Pursuit" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
-    #unityContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100dvh;
-      width: 100dvw;
-    }
+    <!-- Fullscreen mode for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
 
-    #unity-canvas {
-      width: 100dvw;
-      height: 100dvh;
-      background: #2E2C3B;
-      display: block;
-    }
-
-
-    #rotateMessage {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100dvw;
-      height: 100dvh;
-      background: #2E2C3B;
-      color: white;
-      font-size: 1.5em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    #loadingOverlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100dvw;
-      height: 100dvh;
-      background-color: #2E2C3B;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-    }
-
-    .spinner {
-      border: 6px solid #ddd;
-      border-top: 6px solid #ffd600;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-  </style>
-</head>
-<body>
-  <div id="rotateMessage">Please rotate your device to portrait mode to continue playing.</div>
-  <div id="loadingOverlay">
-    <div class="spinner"></div>
-  </div>
-  
-  <div id="unityContainer">
-    <canvas id="unity-canvas" width="720" height="1280"></canvas>
-  </div>
-
-  <script src="Build/In Pursuit.loader.js"></script>
-  <script>
-    function isMobile() {
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-
-    function checkOrientation() {
-      const landscape = window.innerWidth > window.innerHeight;
-      const mobile = isMobile();
-
-      const canvas = document.getElementById("unity-canvas");
-      const message = document.getElementById("rotateMessage");
-
-      if (mobile && landscape) {
-        message.style.display = "flex";
-        canvas.style.display = "none";
-      } else {
-        message.style.display = "none";
-        canvas.style.display = "block";
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #2e2c3b;
+        overflow: hidden;
       }
 
-      if (!mobile) {
-        console.log("Desktop detected");
+      .rajdhani-regular {
+        font-family: "Rajdhani", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      #unityContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+        width: 100dvw;
+      }
+
+      #unity-canvas {
+        width: 100dvw;
+        height: 100dvh;
+        background: #2e2c3b;
+        display: block;
+      }
+
+      #rotateMessage {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100dvw;
+        height: 100dvh;
+        background: #2e2c3b;
+        color: white;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      #loadingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100dvw;
+        height: 100dvh;
+        background-color: #2e2c3b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 20;
+      }
+
+      #loadingText {
+        color: white;
+        font-size: 1.2em;
+        margin-top: 10px;
+      }
+
+      .spinner {
+        border: 6px solid #ddd;
+        border-top: 6px solid #ffd600;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="rotateMessage">
+      Please rotate your device to portrait mode to continue playing.
+    </div>
+    <div id="loadingOverlay">
+      <div class="spinner"></div>
+      <div id="loadingText" class="rajdhani-regular">Loading...</div>
+    </div>
+
+    <div id="unityContainer">
+      <canvas id="unity-canvas" width="720" height="1280"></canvas>
+    </div>
+
+    <script src="Build/In Pursuit.loader.js"></script>
+    <script>
+      function isMobile() {
+        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      }
+
+      function checkOrientation() {
+        const landscape = window.innerWidth > window.innerHeight;
+        const mobile = isMobile();
+
         const canvas = document.getElementById("unity-canvas");
-        canvas.style.aspectRatio = "9 / 16";
-        canvas.style.height = "100dvh";
-        canvas.style.maxHeight = "100dvh";
-        canvas.style.maxWidth = "720px"; // Ensuring a maximum width for small screens
-        canvas.style.display = "block";
-        canvas.style.margin = "0 auto";
-        canvas.style.background = "#2E2C3B";
-        // Additional styling for better responsiveness
-        canvas.style.border = "2px solid #4b4861"; // Adding a border for visibility
+        const message = document.getElementById("rotateMessage");
+
+        if (mobile && landscape) {
+          message.style.display = "flex";
+          canvas.style.display = "none";
+        } else {
+          message.style.display = "none";
+          canvas.style.display = "block";
+        }
+
+        if (!mobile) {
+          console.log("Desktop detected");
+          const canvas = document.getElementById("unity-canvas");
+          canvas.style.aspectRatio = "9 / 16";
+          canvas.style.height = "100dvh";
+          canvas.style.maxHeight = "100dvh";
+          canvas.style.maxWidth = "720px"; // Ensuring a maximum width for small screens
+          canvas.style.display = "block";
+          canvas.style.margin = "0 auto";
+          canvas.style.background = "#2E2C3B";
+          // Additional styling for better responsiveness
+          canvas.style.border = "2px solid #4b4861"; // Adding a border for visibility
+        }
       }
-    }
 
-    window.addEventListener("load", checkOrientation);
-    window.addEventListener("resize", checkOrientation);
-    window.addEventListener("orientationchange", checkOrientation);
+      window.addEventListener("load", checkOrientation);
+      window.addEventListener("resize", checkOrientation);
+      window.addEventListener("orientationchange", checkOrientation);
 
-    const loadingOverlay = document.getElementById("loadingOverlay");
+      const loadingOverlay = document.getElementById("loadingOverlay");
 
-    createUnityInstance(document.querySelector("#unity-canvas"), {
-      dataUrl: "Build/In Pursuit.data.unityweb",
-      frameworkUrl: "Build/In Pursuit.framework.js.unityweb",
-      codeUrl: "Build/In Pursuit.wasm.unityweb",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "Zeesmic",
-      productName: "InPursuit",
-      productVersion: "1.0"
-    }).then((unityInstance) => {
-  loadingOverlay.style.display = "none";
-}).catch((err) => {
-  loadingOverlay.innerText = "Failed to load the game.";
-  console.error(err);
-});
-  </script>
-</body>
+      createUnityInstance(
+        document.querySelector("#unity-canvas"),
+        {
+          dataUrl: "Build/In Pursuit.data.unityweb",
+          frameworkUrl: "Build/In Pursuit.framework.js.unityweb",
+          codeUrl: "Build/In Pursuit.wasm.unityweb",
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "Zeesmic",
+          productName: "InPursuit",
+          productVersion: "1.0",
+        },
+        (progress) => {
+          const percent = Math.round(progress * 100);
+          loadingText.textContent = `${percent}%`;
+        }
+      )
+        .then((unityInstance) => {
+          loadingOverlay.style.display = "none";
+        })
+        .catch((err) => {
+          loadingOverlay.innerText = "Failed to load the game.";
+          console.error(err);
+        });
+    </script>
+  </body>
 </html>
