@@ -24,13 +24,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      width: 100vw;
+      height: 100dvh;
+      width: 100dvw;
     }
 
     #unity-canvas {
-      width: 100vw;
-      height: 100vh;
+      width: 100dvw;
+      height: 100dvh;
       background: #2E2C3B;
       display: block;
     }
@@ -41,8 +41,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100dvw;
+      height: 100dvh;
       background: #2E2C3B;
       color: white;
       font-size: 1.5em;
@@ -59,8 +59,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100dvw;
+      height: 100dvh;
       background-color: #2E2C3B;
       display: flex;
       align-items: center;
@@ -118,8 +118,8 @@
         console.log("Desktop detected");
         const canvas = document.getElementById("unity-canvas");
         canvas.style.aspectRatio = "9 / 16";
-        canvas.style.height = "100vh";
-        canvas.style.maxHeight = "100vh";
+        canvas.style.height = "100dvh";
+        canvas.style.maxHeight = "100dvh";
         canvas.style.maxWidth = "720px"; // Ensuring a maximum width for small screens
         canvas.style.display = "block";
         canvas.style.margin = "0 auto";
